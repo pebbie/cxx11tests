@@ -71,7 +71,7 @@ Installation & Requirements
 
 The following software packages are needed to run cxx11tests:
 
-*   Python 3 (>= 3.3)
+*   ~~Python 3 (>= 3.3)~~ modified to run on Python 2.7.x
 *   GNU Make
 *   any C++ compiler
 
