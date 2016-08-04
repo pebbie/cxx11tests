@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 import os
 import shlex
@@ -6,6 +6,14 @@ import shutil
 import sys
 import unittest
 
+def cmd_quote(string):
+    import sys
+    if sys.version_info < (3,3):
+        import pipes
+        return pipes.quote(string)
+    else:
+        import shlex
+        return shlex.quote(string)
 
 def main():
     root_dir = os.path.dirname(os.path.realpath(__file__))
@@ -73,9 +81,9 @@ class MakefileGen:
         self.makefile_header.append("# Command to regenerate this Makefile:")
         self.makefile_header.append(
                 "# CXX={CXX} CPPFLAGS={CPPFLAGS} CXXFLAGS={CXXFLAGS} ".format(
-                        CXX=shlex.quote(CXX),
-                        CPPFLAGS=shlex.quote(CPPFLAGS),
-                        CXXFLAGS=shlex.quote(CXXFLAGS))
+                        CXX=cmd_quote(CXX),
+                        CPPFLAGS=cmd_quote(CPPFLAGS),
+                        CXXFLAGS=cmd_quote(CXXFLAGS))
                 + sys.argv[0])
         self.makefile_header.append("")
 
