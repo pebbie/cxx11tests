@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 LINEWIDTH = 80
 COLORIZED = True
@@ -8,6 +8,15 @@ import shlex
 import subprocess
 import sys
 
+def cmd_quote(string):
+    import sys
+    if sys.version_info < (3,3):
+        import pipes
+        return pipes.quote(string)
+    else:
+        import shlex
+        return shlex.quote(string)
+
 def main():
     # Store arguments
     testname = sys.argv[1]
@@ -16,7 +25,7 @@ def main():
 
     # Run test and save results
     with open(logfile, 'w') as f:
-        cmd = ' '.join(map(shlex.quote, cmds))
+        cmd = ' '.join(map(cmd_quote, cmds))
         f.write("# Command executed: ")
         f.write(cmd)
         f.write('\n')
